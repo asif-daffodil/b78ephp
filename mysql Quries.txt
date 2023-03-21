@@ -1,0 +1,52 @@
+CREATE DATABASE `b78e`
+
+CREATE TABLE `students` (
+`id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+`name` VARCHAR(100),
+`city` VARCHAR(100),
+`gender` CHAR(6),
+`mobile` CHAR(18),
+`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP    
+)
+
+INSERT INTO `students` (`name`, `city`, `gender`,`mobile`) VALUES ("Rasel Hossen", "Savar", "Male", "01517095069")
+
+INSERT INTO `students` (`name`, `city`, `gender`,`mobile`) 
+VALUES 
+("Iamin Hossain", "Dhaka", "Male", "01676454621"),
+("Dip Sarker", "Dhaka", "Male", "01537116158"),
+("Rakib Hossain", "Dhaka", "Male", "01623140960")
+
+SELECT * FROM `students`
+SELECT `name` FROM `students`
+SELECT `name`, `city` FROM `students`
+SELECT * FROM `students` WHERE `id` = 4;
+SELECT * FROM `students` WHERE `city` = "Savar";
+SELECT * FROM `students` WHERE `city` = "Savar" AND `gender` = "Male";
+SELECT `name`, `mobile` FROM `students` WHERE `city` = "Savar" AND `gender` = "Male";
+
+SELECT `b78e`.`students`.`name`, `b78e`.`students`.`mobile` FROM `b78e`.`students` 
+WHERE `b78e`.`students`.`city` = "Savar" AND `b78e`.`students`.`gender` = "Male";
+
+SELECT `b78e`.`students`.`name` AS `Student Name`, `b78e`.`students`.`mobile` AS `Student Mobile` FROM `b78e`.`students` 
+WHERE `b78e`.`students`.`city` = "Savar" AND `b78e`.`students`.`gender` = "Male";
+
+ALTER TABLE `students` CHANGE `mobile` `phone` CHAR(15)
+ALTER TABLE `students` ADD `Religion` VARCHAR(50) AFTER `phone`
+ALTER TABLE `students` DROP `Religion`
+
+UPDATE `students` SET `city` = "Savar" WHERE `id` = 4
+DELETE FROM `students` WHERE `id` = 5
+
+ALTER TABLE `students` ADD FOREIGN KEY (`subject_id`) REFERENCES `students`(`id`)
+
+SELECT 
+`students`.`name` AS `Student Name`, 
+`students`.`city` AS `Student City`, 
+`students`.`phone` AS `Studen Contact`, 
+`students`.`gender` AS `Gender`, 
+`subjects`.`name` AS `Subject Name`, 
+`teacher`.`name` AS `Teacher Name` 
+FROM `students` 
+INNER JOIN `subjects` ON `students`.`subject_id` = `subjects`.`id` 
+INNER JOIN `teacher` ON `subjects`.`teacher_id` = `teacher`.`id`;
